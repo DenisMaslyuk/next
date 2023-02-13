@@ -1,5 +1,6 @@
 import { Message } from '@/models/message'
 import styles from '@/styles/Home.module.css'
+import Link from 'next/link'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 type HomeProps = {
@@ -55,9 +56,12 @@ function Home({ messages: data }: HomeProps) {
 
   return (
     <>
-      <main className={styles.main}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <label htmlFor="name" className={styles.label}>
+      <main className="main">
+        <Link href="/numbers" className="link">
+          Go to numbers
+        </Link>
+        <form onSubmit={handleSubmit} className="form">
+          <label htmlFor="name" className="label">
             Name:
           </label>
           <input
@@ -66,10 +70,10 @@ function Home({ messages: data }: HomeProps) {
             name="name"
             onChange={handleInputChange}
             value={inputs.name}
-            className={styles.input}
+            className="input"
           />
-          {errors.name && <p className={styles.error}>{errors.name}</p>}
-          <label htmlFor="message" className={styles.label}>
+          {errors.name && <p className="error">{errors.name}</p>}
+          <label htmlFor="message" className="label">
             Message:
           </label>
           <textarea
@@ -80,7 +84,7 @@ function Home({ messages: data }: HomeProps) {
             className={styles.textarea}
           />
           {errors.message && <p className={styles.error}>{errors.message}</p>}
-          <button type="submit" className={styles.button}>
+          <button type="submit" className="button">
             Submit
           </button>
         </form>
@@ -101,8 +105,9 @@ function Home({ messages: data }: HomeProps) {
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/messages')
+export async function getServerSideProps(context) {
+  const { req } = context
+  const res = await fetch(`http://${req.headers.host}/api/messages`)
   const messages = await res.json()
   return {
     props: { messages },

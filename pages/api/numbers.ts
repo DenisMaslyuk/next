@@ -1,20 +1,17 @@
 import { Message } from '@/models/message'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const messages: Message[] = [
-  { name: 'John Doe', message: 'Hello' },
-  { name: 'Jane Doe', message: 'Hello' },
-]
+let number: number[] = []
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Message[]>,
+  res: NextApiResponse<number[]>,
 ) {
   const { method, body } = req
   switch (method) {
     case 'GET':
       try {
-        res.status(200).json(messages)
+        res.status(200).json(number)
       } catch (error) {
         res.status(400).json([])
         console.log(error)
@@ -22,8 +19,8 @@ export default function handler(
       break
     case 'POST':
       try {
-        messages.unshift(JSON.parse(body))
-        res.status(200).json(messages)
+        number = [...JSON.parse(body)]
+        res.status(200).json(number)
       } catch (error) {
         res.status(400).json([])
         console.log(error)

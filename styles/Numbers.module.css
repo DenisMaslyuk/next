@@ -1,0 +1,15 @@
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th {
+  display: table-cell;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+.table td {
+  display: table-cell;
+  text-align: center;
+  padding: 0.5rem;
+}
